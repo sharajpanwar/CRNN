@@ -1,1 +1,1 @@
-# ML-6973-Group-ID-03---Convolution-Recurrent-Neural-Networks-for-Music-Classification-
+#Repo to "A deep learning approach for mapping music genres" conference paper
