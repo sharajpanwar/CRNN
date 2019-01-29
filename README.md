@@ -8,8 +8,11 @@ Codes are return for python 3.6.4. Details of required libraries and dependencie
 # Requirements
 
 •	tensorflow : 
+
 •	keras :
+
 •	librosa
+
 •	kapre
 
 
