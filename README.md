@@ -6,13 +6,12 @@
 Codes are return for python 3.6.4. Details of required libraries and dependencies are given below.
 
 # Requirements
-1 tensorflow : 
 
-2 keras :
+•	tensorflow : 
+•	keras :
+•	librosa
+•	kapre
 
-3 librosa
-
-4 kapre
 
 # Installations
 These instructions will help installing required dependencies.
