@@ -7,13 +7,13 @@ Codes are return for python 3.6.4. Details of required libraries and dependencie
 
 # Requirements
 
-•	tensorflow : 
+•	tensorflow : tensorflow-gpu 1.12.0 
 
-•	keras :
+•	keras : 2.2.4 
 
-•	librosa
+•	librosa : librosa 0.6.1  
 
-•	kapre
+•	kapre : 0.1.3.1
 
 
 # Installations
