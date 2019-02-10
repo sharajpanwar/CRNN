@@ -3,7 +3,7 @@
 
 # Getting Started
 
-Codes are written for python 3.6.4. Details of required libraries and dependencies are given below.
+Codes are written in keras, python 3.6.4. Details of required libraries and dependencies are given below.
 
 # Requirements
 
