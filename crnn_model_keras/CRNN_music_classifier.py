@@ -4,11 +4,8 @@
 
 
 from __future__ import print_function
-
 import numpy as np
 import h5py
-
-
 import keras
 from keras import backend as K
 from keras.models import Model
@@ -19,18 +16,14 @@ from keras.layers.normalization import BatchNormalization
 from keras.optimizers import Adam
 from keras.layers import Input
 from keras.layers.recurrent import GRU
-
 import os
-
 os.environ["CUDA_VISIBLE_DEVICES"]= '0'
-from sklearn.metrics import roc_auc_score
 import matplotlib.pyplot as plt
 
 # input image dimensions
-
-batch = 16
+batch = 32
 classes = 50
-epochs = 15
+epochs = 100
 rows, cols = 96, 1366
 
 
@@ -122,9 +115,9 @@ print("Compiling model architecture.....\n\n")
 model.compile(loss=keras.losses.binary_crossentropy,
               optimizer=Adam(0.0001, beta_1=0.5, beta_2=0.9),
               metrics=['accuracy'])
-
+#count the total number of trainable parameters 
 print (model.count_params())
-
+#print the model
 print (model.summary())
 
 # Fit the model
@@ -135,6 +128,8 @@ history = model.fit(X_train, Y_train, epochs=epochs, batch_size=batch, verbose=1
 # Save model
 print("Saving the model.....\n\n")
 model.save('/saved_model/music_classifier.h5')
+
+#plotting the learning curve
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('model loss')
@@ -142,11 +137,3 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-
-model.save('./classifier_model/cnn3_aug_model.h5')
-
-# score, acc = model.evaluate(X_test, Y_test, batch_size=64)
-# print('Test accuracy:', acc)
-# target = model.predict(X_test, batch_size=32)
-# auc = roc_auc_score(Y_test, target)
-# print("auc_roc:", auc)
