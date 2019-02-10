@@ -36,76 +36,40 @@ rows, cols = 96, 1366
 
 
 ########################################################################################################################
-# uploading training_data
+# function for uploading the data
 
-X_train = np.load('input_data/X_train.npy')
-print('X_train_shape', X_train.shape)
+def data_upload(x, y):
+    x = np.load('/home/sharaj/PycharmProjects/music/input_data/'+x+'.npy')
+    y = np.load('/home/sharaj/PycharmProjects/music/input_data/'+y+'.npy')
+    # let's shuffle the data
+    ind_list = [i for i in range(x.shape[0])]
+    shuffle(ind_list)
+    x = x[ind_list, :, :]
+    y = y[ind_list,]
+    # reshape the data to feed in the neural network
+    if K.image_data_format() == 'channels_first':
+        x = x.reshape(x.shape[0], 1, img_rows, img_cols)
+        input_shape = (1, img_rows, img_cols)
+    else:
+        x = x.reshape(x.shape[0], img_rows, img_cols, 1)
+        input_shape = (img_rows, img_cols, 1)
+    return x, y, input_shape
 
-Y_train = np.load('input_data/Y_train.npy')
-print('Y_train_shape', Y_train.shape)
-# let's shuffle the data
+# uploading training data
+X_train, Y_train, input_shape = data_upload('X_train', 'Y_train')
+print ('training data dimensions', X_train.shape, Y_train.shape)
 
-from random import shuffle
-
-index = [i for i in range(X_train.shape[0])]
-shuffle(index)
-X_train = X_train[index, :,:]
-Y_train = Y_train[index,]
-
-# reshape the data to feed in the neural network
-if K.image_data_format() == 'channels_first':
-    X_train = X_train.reshape(X_train.shape[0], 1, rows, cols)
-    input_shape = (1, rows, cols)
-else:
-    X_train = X_train.reshape(X_train.shape[0], rows, cols, 1)
-    input_shape = (rows, cols, 1)
-print(X_train.shape)
-
-########################################################################################################################
 # uploading Testing data
+X_test, Y_test, input_shape  = data_upload('X_test', 'Y_test')
+print ('testing data dimensions', X_test.shape, Y_test.shape)
 
-X_test = np.load('input_data/X_test.npy')
-print('X_test_shape', X_test.shape)
-Y_test = np.load('input_data/Y_test.npy')
-print('X_test_shape', Y_test.shape)
-
-# reshape the data to feed in the neural network
-if K.image_data_format() == 'channels_first':
-    X_test = X_test.reshape(X_test.shape[0], 1, rows, cols)
-    input_shape = (1, rows, cols)
-else:
-    X_test = X_test.reshape(X_test.shape[0], rows, cols, 1)
-    input_shape = (rows, cols, 1)
-print(X_test.shape)
-
-
-########################################################################################################################
 # uploading validation data
-
-X_val = np.load('input_data/X_val.npy')
-print('X_val_shape', X_val.shape)
-Y_val = np.load('input_data/Y_val.npy')
-print('Y_val_shape', Y_val.shape)
-
-# reshape the data to feed in the neural network
-if K.image_data_format() == 'channels_first':
-    X_val = X_val.reshape(X_val.shape[0], 1, rows, cols)
-    input_shape = (1, rows, cols)
-else:
-    X_val = X_val.reshape(X_val.shape[0], rows, cols, 1)
-    input_shape = (rows, cols, 1)
-print(X_val.shape)
-
+X_train, Y_train, input_shape = data_upload('X_val', 'Y_val')
+print ('validation data dimensions', X_val.shape, Y_val.shape)
 
 ########################################################################################################################
 
-# one hot encoding of labels
-Y_train = keras.utils.to_categorical(Y_train, classes)
-print(Y_train.shape)
-Y_test = keras.utils.to_categorical(Y_test, classes)
-print(Y_test.shape)
-
-# Model Definition
+# Model Architecture
 
 def music_classifier():
 
