@@ -1,10 +1,8 @@
 
 # CRNN model for 'A deep learning approach for mapping music geners'
 # We are using default settings of keras 2.2.4 
-
 # we can check the setting with  $HOME/.keras/keras.json
-# You should see:
-    
+# You should see:    
 # {
 #     "image_data_format": "channels_last",
 #     "epsilon": 1e-07,
