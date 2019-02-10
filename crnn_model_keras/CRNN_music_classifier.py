@@ -37,6 +37,7 @@ classes = 50
 epochs = 100
 mel_bin, time = 96, 1366
 ########################################################################################################################
+
 # function for uploading the data
 def data_upload(x, y):
     x = np.load('/home/sharaj/PycharmProjects/music/input_data/'+x+'.npy')
@@ -67,6 +68,7 @@ print ('testing data dimensions', X_test.shape, Y_test.shape)
 X_train, Y_train, input_shape = data_upload('X_val', 'Y_val')
 print ('validation data dimensions', X_val.shape, Y_val.shape)
 ########################################################################################################################
+
 # Model Architecture
 def music_classifier():
 
