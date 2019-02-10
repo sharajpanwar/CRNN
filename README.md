@@ -3,7 +3,7 @@
 
 # Getting Started
 
-Codes are return for python 3.6.4. Details of required libraries and dependencies are given below.
+Codes are written for python 3.6.4. Details of required libraries and dependencies are given below.
 
 # Requirements
 
