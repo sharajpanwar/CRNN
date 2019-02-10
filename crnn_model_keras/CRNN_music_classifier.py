@@ -1,5 +1,19 @@
 
-# CRNN model
+# CRNN model for 'A deep learning approach for mapping music geners'
+# We are using default settings of keras 2.2.4 
+
+# we can check the setting with  $HOME/.keras/keras.json
+# You should see:
+    
+# {
+#     "image_data_format": "channels_last",
+#     "epsilon": 1e-07,
+#     "floatx": "float32",
+#     "backend": "tensorflow"
+# }
+# if you see different please change with above settings 
+
+#Acknowledgement:
 # this code takes highly from https://github.com/keunwoochoi/music-auto_tagging-keras/blob/master/music_tagger_crnn.py
 
 from __future__ import print_function
@@ -23,7 +37,7 @@ import matplotlib.pyplot as plt
 batch = 32
 classes = 50
 epochs = 100
-rows, cols = 96, 1366
+mel_bin, time = 96, 1366
 
 ########################################################################################################################
 # function for uploading the data
@@ -37,11 +51,11 @@ def data_upload(x, y):
     y = y[ind_list,]
     # reshape the data to feed in the neural network
     if K.image_data_format() == 'channels_first':
-        x = x.reshape(x.shape[0], 1, img_rows, img_cols)
-        input_shape = (1, img_rows, img_cols)
+        x = x.reshape(x.shape[0], 1, mel_bin, time)
+        input_shape = (1, mel_bin, time)
     else:
-        x = x.reshape(x.shape[0], img_rows, img_cols, 1)
-        input_shape = (img_rows, img_cols, 1)
+        x = x.reshape(x.shape[0], mel_bin, time, 1)
+        input_shape = (mel_bin, time, 1)
     return x, y, input_shape
 
 # uploading training data
@@ -87,8 +101,10 @@ def music_classifier():
     out_put_conv3 = BatchNormalization()(out_put_conv3)
     out_put_conv3 = Activation('elu')(out_put_conv3)
     out_put_conv3 = MaxPooling2D(pool_size=(4, 4), strides=(4, 4))(out_put_conv3)
-    out_put_conv3 = Dropout(0.1)(out_put_conv3)
-
+    out_put_conv3 = Dropout(0.1)(out_put_conv3)    
+    
+    # we are using default keras 2.2.4 i.e channel last (mel_bin, time, channel), so we don't need to add 
+    # permute block before reshaping
     input_rnn = Reshape((15, 128))(out_put_conv3)
     out_put_rnn1 = GRU(32, return_sequences=True)(input_rnn)
     out_put_rnn2 = GRU(32, return_sequences=False)(out_put_rnn1)
