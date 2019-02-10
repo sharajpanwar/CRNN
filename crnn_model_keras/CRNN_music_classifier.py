@@ -2,7 +2,6 @@
 # CRNN model
 # this code takes highly from https://github.com/keunwoochoi/music-auto_tagging-keras/blob/master/music_tagger_crnn.py
 
-
 from __future__ import print_function
 import numpy as np
 import h5py
@@ -26,11 +25,8 @@ classes = 50
 epochs = 100
 rows, cols = 96, 1366
 
-
-
 ########################################################################################################################
 # function for uploading the data
-
 def data_upload(x, y):
     x = np.load('/home/sharaj/PycharmProjects/music/input_data/'+x+'.npy')
     y = np.load('/home/sharaj/PycharmProjects/music/input_data/'+y+'.npy')
@@ -63,7 +59,6 @@ print ('validation data dimensions', X_val.shape, Y_val.shape)
 ########################################################################################################################
 
 # Model Architecture
-
 def music_classifier():
 
     input= Input(shape=input_shape)
@@ -95,19 +90,15 @@ def music_classifier():
     out_put_conv3 = Dropout(0.1)(out_put_conv3)
 
     input_rnn = Reshape((15, 128))(out_put_conv3)
-
     out_put_rnn1 = GRU(32, return_sequences=True)(input_rnn)
     out_put_rnn2 = GRU(32, return_sequences=False)(out_put_rnn1)
-    out_put = Dropout(0.3)(out_put_rnn2)
+    out_put_rnn2 = Dropout(0.3)(out_put_rnn2)
 
-    out_put = Dense(classes, activation='sigmoid')(out_put)
-
+    out_put = Dense(classes, activation='sigmoid')(out_put_rnn2)
     model = Model(inputs=input, outputs=out_put)
-
     return model
 
 print("Starting to train.....\n\n")
-
 model = music_classifier()
 
 # Compile
@@ -122,7 +113,6 @@ print (model.summary())
 
 # Fit the model
 print("Fitting the model with train data.....\n\n")
-
 history = model.fit(X_train, Y_train, epochs=epochs, batch_size=batch, verbose=1, validation_data=(X_val, Y_val))
 
 # Save model
