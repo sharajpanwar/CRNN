@@ -94,17 +94,17 @@ def music_classifier():
     out_put_conv3 = MaxPooling2D(pool_size=(4, 4), strides=(4, 4))(out_put_conv3)
     out_put_conv3 = Dropout(0.1)(out_put_conv3)
 
-    out_put_conv3 = Conv2D(128, (3, 3), padding='same')(out_put_conv3)
-    out_put_conv3 = BatchNormalization()(out_put_conv3)
-    out_put_conv3 = Activation('elu')(out_put_conv3)
-    out_put_conv3 = MaxPooling2D(pool_size=(4, 4), strides=(4, 4))(out_put_conv3)
-    out_put_conv3 = Dropout(0.1)(out_put_conv3)    
+    out_put_conv4 = Conv2D(128, (3, 3), padding='same')(out_put_conv3)
+    out_put_conv4 = BatchNormalization()(out_put_conv4)
+    out_put_conv4 = Activation('elu')(out_put_conv4)
+    out_put_conv4 = MaxPooling2D(pool_size=(4, 4), strides=(4, 4))(out_put_conv4)
+    out_put_conv4 = Dropout(0.1)(out_put_conv4)    
     
     # we are using default keras 2.2.4 i.e channel_last (mel_bin, time, channel), so we don't need to add 
     # permute block before reshaping,for channel_last add permute block as:
     # out_put_conv3 = Permute((3, 1, 2))(out_put_conv3)
         
-    input_rnn = Reshape((15, 128))(out_put_conv3) # cnn output is reshaped to feed to RNN-GRU
+    input_rnn = Reshape((15, 128))(out_put_conv4) # cnn output is reshaped to feed to RNN-GRU
     out_put_rnn1 = GRU(32, return_sequences=True)(input_rnn)
     out_put_rnn2 = GRU(32, return_sequences=False)(out_put_rnn1)
     out_put_rnn2 = Dropout(0.3)(out_put_rnn2)
