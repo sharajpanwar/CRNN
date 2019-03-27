@@ -101,7 +101,7 @@ def music_classifier():
     out_put_conv4 = Dropout(0.1)(out_put_conv4)    
     
     # we are using default keras 2.2.4 i.e channel_last (mel_bin, time, channel), so we don't need to add 
-    # permute block before reshaping,for channel_last add permute block as:
+    # permute block before reshaping,for channel_first add permute block as:
     # out_put_conv3 = Permute((3, 1, 2))(out_put_conv3)
         
     input_rnn = Reshape((15, 128))(out_put_conv4) # cnn output is reshaped to feed to RNN-GRU
